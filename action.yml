@@ -1,0 +1,30 @@
+name: 'Axiom annotations'
+description: 'Create annotations in Axiom'
+author: 'axiomhq'
+
+# Add your action's branding here. This will appear on the GitHub Marketplace.
+branding:
+  icon: 'alert-triangle'
+  color: 'black'
+
+# Define your inputs here.
+inputs:
+  axiom_datasets:
+    description: 'Comma separated list of datasets to associate the annotations with'
+    required: true
+  axiom_token:
+    description: 'Axiom API token'
+    required: true
+  title:
+    description: 'The title of the annotation'
+    required: true
+  description:
+    description: 'The description of the annotation (markdown supported)'
+    required: true
+  url:
+    description: 'The URL to link to (defaults to the GitHub action URL)'
+    required: false
+
+runs:
+  using: node20
+  main: dist/index.js
