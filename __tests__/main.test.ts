@@ -54,8 +54,17 @@ describe('action', () => {
 
     // Verify that all of the core library functions were called correctly
     expect(debugMock).toHaveBeenNthCalledWith(1, 'Sending annotation to Axiom')
+    expect(debugMock).toHaveBeenNthCalledWith(
+      2,
+      `Annotation: ${JSON.stringify({
+        datasets: ['test-dataset'],
+        title: 'test title',
+        description: 'This is a test',
+        url: `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
+      })}`
+    )
     expect(setFailedMock).not.toHaveBeenCalled()
-    expect(debugMock).toHaveBeenNthCalledWith(2, 'Annotation sent to Axiom')
+    expect(debugMock).toHaveBeenNthCalledWith(3, 'Annotation sent to Axiom')
     expect(errorMock).not.toHaveBeenCalled()
   })
 

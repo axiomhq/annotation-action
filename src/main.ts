@@ -30,7 +30,14 @@ export async function run(): Promise<void> {
     }
 
     // Log the annotation details
-    core.debug(`Annotation: ${JSON.stringify(body)}`)
+    core.debug(
+      `Annotation: ${JSON.stringify({
+        datasets,
+        title,
+        description,
+        url
+      })}`
+    )
 
     // Send the annotation to Axiom
     const response = await fetch('https://api.axiom.co/v2/annotations', {
