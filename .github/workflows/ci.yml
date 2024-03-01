@@ -55,8 +55,8 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
-
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+          axiom_datasets: 'luna-test'
+          axiom_token: ${{ secrets.AXIOM_TOKEN }}
+          title: 'Test Title'
+          description: 'Test Description'
+          url: 'https://example.com'
