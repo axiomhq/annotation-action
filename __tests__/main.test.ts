@@ -38,8 +38,8 @@ describe('action', () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation((name: string) => {
       switch (name) {
-        case 'axiom_dataset':
-          return '500'
+        case 'axiom_datasets':
+          return 'test-dataset'
         case 'axiom_token':
           return 'test'
         case 'title':
@@ -71,8 +71,8 @@ describe('action', () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation((name: string) => {
       switch (name) {
-        case 'axiom_dataset':
-          return '500'
+        case 'axiom_datasets':
+          return 'test-dataset'
         case 'axiom_token':
           return 'test'
         case 'title':
@@ -110,7 +110,7 @@ describe('action', () => {
     // Verify that all of the core library functions were called correctly
     expect(setFailedMock).toHaveBeenNthCalledWith(
       1,
-      'Input required and not supplied: axiom_dataset'
+      'Input required and not supplied: axiom_datasets'
     )
     expect(errorMock).not.toHaveBeenCalled()
   })

@@ -55,7 +55,7 @@ jobs:
         id: test-action
         uses: ./
         with:
-          axiom_datasets: 'luna-test'
+          axiom_datasets: 'annotations-github-action'
           axiom_token: ${{ secrets.AXIOM_TOKEN }}
           title: 'Test Title'
           description: 'Test Description'

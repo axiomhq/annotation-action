@@ -6,7 +6,9 @@ import * as core from '@actions/core'
  */
 export async function run(): Promise<void> {
   try {
-    const datasets = [core.getInput('axiom_dataset', { required: true })]
+    const datasets = core
+      .getInput('axiom_datasets', { required: true })
+      .split(',')
     const token = core.getInput('axiom_token', { required: true })
     const title = core.getInput('title', { required: true })
     const description = core.getInput('description', { required: true })

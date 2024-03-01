@@ -24742,7 +24742,9 @@ const core = __importStar(__nccwpck_require__(2186));
  */
 async function run() {
     try {
-        const datasets = [core.getInput('axiom_dataset', { required: true })];
+        const datasets = core
+            .getInput('axiom_datasets', { required: true })
+            .split(',');
         const token = core.getInput('axiom_token', { required: true });
         const title = core.getInput('title', { required: true });
         const description = core.getInput('description', { required: true });
@@ -24755,16 +24757,16 @@ async function run() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({
                 type: 'deploy',
                 time: new Date().toISOString(),
                 datasets,
                 title,
-                description: description,
-                url,
-            }),
+                description,
+                url
+            })
         });
         // Throw an error if the request fails
         if (!response.ok) {
