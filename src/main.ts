@@ -19,6 +19,19 @@ export async function run(): Promise<void> {
     // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
     core.debug('Sending annotation to Axiom')
 
+    const body = {
+      type: 'deploy',
+      time: new Date().toISOString(),
+
+      datasets,
+      title,
+      description,
+      url
+    }
+
+    // Log the annotation details
+    core.debug(`Annotation: ${JSON.stringify(body)}`)
+
     // Send the annotation to Axiom
     const response = await fetch('https://api.axiom.co/v2/annotations', {
       method: 'POST',
@@ -26,15 +39,7 @@ export async function run(): Promise<void> {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({
-        type: 'deploy',
-        time: new Date().toISOString(),
-
-        datasets,
-        title,
-        description,
-        url
-      })
+      body: JSON.stringify(body)
     })
 
     // Throw an error if the request fails
