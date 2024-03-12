@@ -10,6 +10,7 @@ export async function run(): Promise<void> {
       .getInput('axiom_datasets', { required: true })
       .split(',')
     const token = core.getInput('axiom_token', { required: true })
+    const orgId = core.getInput('axiom_org_id', { required: true })
     const title = core.getInput('title', { required: true })
     const description = core.getInput('description', { required: true })
     const url =
@@ -44,7 +45,8 @@ export async function run(): Promise<void> {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'X-Axiom-Org-Id': orgId
       },
       body: JSON.stringify(body)
     })

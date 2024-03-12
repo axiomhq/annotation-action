@@ -55,8 +55,8 @@ jobs:
         id: test-action
         uses: ./
         with:
-          axiom_datasets: 'annotations-github-action'
+          axiom_datasets: ${{ secrets.AXIOM_DATASET }}
           axiom_token: ${{ secrets.AXIOM_TOKEN }}
-          title: 'Test Title'
-          description: 'Test Description'
+          title: ${{github.event.ref}}
+          description: ${{ github.event.head_commit.message }}
           url: 'https://example.com'
