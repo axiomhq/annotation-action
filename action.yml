@@ -15,6 +15,9 @@ inputs:
   axiom_token:
     description: 'Axiom API token'
     required: true
+  axiom_org_id:
+    description: 'Axiom organization ID'
+    required: true
   title:
     description: 'The title of the annotation'
     required: true
