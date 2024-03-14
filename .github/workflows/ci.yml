@@ -55,8 +55,9 @@ jobs:
         id: test-action
         uses: ./
         with:
-          axiom_datasets: ${{ secrets.AXIOM_DATASET }}
+          axiom_datasets: ${{ secrets.AXIOM_DATASETS }}
           axiom_token: ${{ secrets.AXIOM_TOKEN }}
+          axiom_org_id: ${{ secrets.AXIOM_ORG_ID }}
           title: ${{github.event.ref}}
           description: ${{ github.event.head_commit.message }}
           url: 'https://example.com'
