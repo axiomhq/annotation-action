@@ -24742,50 +24742,42 @@ const core = __importStar(__nccwpck_require__(2186));
  */
 async function run() {
     try {
-        const datasets = core
-            .getInput('axiom_datasets', { required: true })
-            .split(',');
-        const token = core.getInput('axiom_token', { required: true });
-        const orgId = core.getInput('axiom_org_id', { required: true });
-        const title = core.getInput('title', { required: true });
-        const description = core.getInput('description', { required: true });
-        const url = core.getInput('url', { required: false }) ??
-            `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
-        // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-        core.debug('Sending annotation to Axiom');
-        const body = {
-            type: 'deploy',
-            time: new Date().toISOString(),
-            datasets,
-            title,
-            description,
-            url
+        const axiomApiUrl = core.getInput('axiomApiURL') || 'https://api.axiom.co';
+        const token = core.getInput('token', { required: true });
+        core.setSecret(token); // Mask token in output
+        const payload = {
+            datasets: core.getInput('datasets', { required: true }).split(','),
+            time: core.getInput('time') || new Date().toISOString(),
+            endTime: core.getInput('endTime') || undefined,
+            title: core.getInput('title') || undefined,
+            description: core.getInput('description') || undefined,
+            url: core.getInput('url') ||
+                `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`,
+            type: core.getInput('type', { required: true })
         };
-        // Log the annotation details
-        core.debug(`Annotation: ${JSON.stringify({
-            datasets,
-            title,
-            description,
-            url
-        })}`);
-        // Send the annotation to Axiom
-        const response = await fetch('https://api.axiom.co/v2/annotations', {
+        core.debug(`Sending annotation to Axiom: ${JSON.stringify(payload)}`);
+        const response = await fetch(`${axiomApiUrl}/v2/annotations`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-                'X-Axiom-Org-Id': orgId
+                Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(payload)
         });
-        // Throw an error if the request fails
         if (!response.ok) {
-            throw new Error(`Failed to send annotation to Axiom: ${response.statusText}`);
+            let traceIdMsg = '';
+            const traceId = response.headers.get('x-axiom-trace-id');
+            if (traceId) {
+                traceIdMsg = ` (Trace ID: ${traceId})`;
+            }
+            throw new Error(`Failed to send annotation to Axiom${traceIdMsg}: ${response.statusText}`);
         }
-        core.debug('Annotation sent to Axiom');
+        core.debug('Decoding response');
+        const annotation = await response.json();
+        core.setOutput('id', annotation.id);
+        core.info(`Created annotation ${annotation.id}`);
     }
     catch (error) {
-        // Fail the workflow run if an error occurs
         if (error instanceof Error)
             core.setFailed(error.message);
     }

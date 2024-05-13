@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: CI
 
 on:
   pull_request:
@@ -51,13 +51,52 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Test Local Action
-        id: test-action
+      - name: Test Local Action (Minimal)
+        id: test-action-minimal
         uses: ./
         with:
-          axiom_datasets: ${{ secrets.AXIOM_DATASETS }}
-          axiom_token: ${{ secrets.AXIOM_TOKEN }}
-          axiom_org_id: ${{ secrets.AXIOM_ORG_ID }}
-          title: ${{github.event.ref}}
-          description: ${{ github.event.head_commit.message }}
-          url: 'https://example.com'
+          token: ${{ secrets.AXIOM_TOKEN }}
+          axiomApiUrl: ${{ secrets.AXIOM_API_URL }}
+          datasets: annotations-action-ci
+          type: "minimal-example"
+      - name: Test Local Action (Complete)
+        id: test-action-complete
+        uses: ./
+        with:
+          token: ${{ secrets.AXIOM_TOKEN }}
+          axiomApiUrl: ${{ secrets.AXIOM_API_URL }}
+          datasets: annotations-action-ci
+          time: "2024-01-01T00:00:00Z"
+          endTime: "2024-01-01T01:00:00Z"
+          title: "Complete example"
+          description: "This annotation has all the fields!"
+          url: "https://axiom.co"
+          type: "complete-example"
+      - name: "Install Hurl"
+        run: |
+          VERSION=4.3.0
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
+          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb      
+      - run: |
+          hurl <<EOF
+            GET ${{ secrets.AXIOM_API_URL }}/v2/annotations/${{ steps.test-action-minimal.outputs.id }}
+            authorization: Bearer ${{ secrets.AXIOM_TOKEN }}
+            HTTP 200
+            [Asserts]
+            jsonpath "$.id" == "${{ steps.test-action-minimal.outputs.id }}"
+            jsonpath "$.type" == "minimal-example"
+          EOF
+      - run: |
+          hurl <<EOF
+            GET ${{ secrets.AXIOM_API_URL }}/v2/annotations/${{ steps.test-action-complete.outputs.id }}
+            authorization: Bearer ${{ secrets.AXIOM_TOKEN }}
+            HTTP 200
+            [Asserts]
+            jsonpath "$.id" == "${{ steps.test-action-complete.outputs.id }}"
+            jsonpath "$.time" == "2024-01-01T00:00:00.000Z"
+            jsonpath "$.endTime" == "2024-01-01T01:00:00.000Z"
+            jsonpath "$.title" == "Complete example"
+            jsonpath "$.description" == "This annotation has all the fields!"
+            jsonpath "$.url" == "https://axiom.co"
+            jsonpath "$.type" == "complete-example"
+          EOF
