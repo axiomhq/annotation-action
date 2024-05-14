@@ -1,32 +1,49 @@
-name: 'Axiom annotations'
+name: 'Axiom annotation'
+author: 'Axiom, Inc.'
 description: 'Create annotations in Axiom'
-author: 'axiomhq'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'alert-triangle'
+  icon: 'message-square'
   color: 'black'
 
-# Define your inputs here.
 inputs:
-  axiom_datasets:
-    description: 'Comma separated list of datasets to associate the annotations with'
-    required: true
-  axiom_token:
+  axiomToken:
     description: 'Axiom API token'
     required: true
-  axiom_org_id:
-    description: 'Axiom organization ID'
+  axiomUrl:
+    description: 'The Axiom URL, defaults to https://api.axiom.co'
+    required: false
+    default: ''
+  datasets:
+    description: 'Comma separated list of datasets to associate the annotation with'
     required: true
+  type:
+    description: 'The type of the annotation, (e.g. production-deploy)'
+    required: true
+  time:
+    description: 'The time of the annotation (defaults to now)'
+    required: false
+    default: ''
+  endTime:
+    description: 'The end time of the annotation (if set, will create a ranged annotation)'
+    required: false
+    default: ''
   title:
     description: 'The title of the annotation'
-    required: true
-  description:
-    description: 'The description of the annotation (markdown supported)'
-    required: true
-  url:
-    description: 'The URL to link to (defaults to the GitHub action URL)'
     required: false
+    default: ''
+  description:
+    description: 'The description of the annotation (supports Markdown)'
+    required: false
+    default: ''
+  url:
+    description: 'The URL to link to (defaults to the GitHub Actions run URL)'
+    required: false
+    default: ''
+
+outputs:
+  id:
+    description: 'The ID of the created integration'
 
 runs:
   using: node20
