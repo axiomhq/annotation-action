@@ -11,13 +11,13 @@ This action allows you to create an annotation in Axiom.
 - name: Create annotation
   uses: axiomhq/annotation-action@v1
   with:
-    token: ${{ secrets.AXIOM_TOKEN }}
+    axiomToken: ${{ secrets.AXIOM_TOKEN }}
     datasets: production-logs
     type: "production-release"
-    title: "Production release"             # optional
-    description: "Commit ${{ github.sha }}" # optional
     time: "2024-01-01T00:00:00Z"            # optional, defaults to now
     endTime: "2024-01-01T01:00:00Z"         # optional, defaults to null
+    title: "Production release"             # optional
+    description: "Commit ${{ github.sha }}" # optional
     url: "https://axiom.co"                 # optional, defaults to the current job url
 ```
 

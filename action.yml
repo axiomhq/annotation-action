@@ -7,15 +7,18 @@ branding:
   color: 'black'
 
 inputs:
-  axiomApiUrl:
-    description: 'The Axiom API URL, defaults to https://api.axiom.co'
+  axiomToken:
+    description: 'Axiom API token'
+    required: true
+  axiomUrl:
+    description: 'The Axiom URL, defaults to https://api.axiom.co'
     required: false
     default: ''
   datasets:
     description: 'Comma separated list of datasets to associate the annotation with'
     required: true
-  token:
-    description: 'Axiom API token'
+  type:
+    description: 'The type of the annotation, (e.g. production-deploy)'
     required: true
   time:
     description: 'The time of the annotation (defaults to now)'
@@ -37,9 +40,6 @@ inputs:
     description: 'The URL to link to (defaults to the GitHub Actions run URL)'
     required: false
     default: ''
-  type:
-    description: 'The type of the annotation, (e.g. production-deploy)'
-    required: true
 
 outputs:
   id:

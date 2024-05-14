@@ -24742,9 +24742,9 @@ const core = __importStar(__nccwpck_require__(2186));
  */
 async function run() {
     try {
-        const axiomApiUrl = core.getInput('axiomApiURL') || 'https://api.axiom.co';
-        const token = core.getInput('token', { required: true });
-        core.setSecret(token); // Mask token in output
+        const axiomUrl = core.getInput('axiomUrl') || 'https://api.axiom.co';
+        const axiomToken = core.getInput('axiomToken', { required: true });
+        core.setSecret(axiomToken); // Mask token in output
         const payload = {
             datasets: core.getInput('datasets', { required: true }).split(','),
             time: core.getInput('time') || new Date().toISOString(),
@@ -24756,11 +24756,11 @@ async function run() {
             type: core.getInput('type', { required: true })
         };
         core.debug(`Sending annotation to Axiom: ${JSON.stringify(payload)}`);
-        const response = await fetch(`${axiomApiUrl}/v2/annotations`, {
+        const response = await fetch(`${axiomUrl}/v2/annotations`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${axiomToken}`
             },
             body: JSON.stringify(payload)
         });

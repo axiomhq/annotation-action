@@ -6,10 +6,10 @@ import * as core from '@actions/core'
  */
 export async function run(): Promise<void> {
   try {
-    const axiomApiUrl = core.getInput('axiomApiURL') || 'https://api.axiom.co'
+    const axiomUrl = core.getInput('axiomUrl') || 'https://api.axiom.co'
 
-    const token = core.getInput('token', { required: true })
-    core.setSecret(token) // Mask token in output
+    const axiomToken = core.getInput('axiomToken', { required: true })
+    core.setSecret(axiomToken) // Mask token in output
 
     const payload = {
       datasets: core.getInput('datasets', { required: true }).split(','),
@@ -24,11 +24,11 @@ export async function run(): Promise<void> {
     }
 
     core.debug(`Sending annotation to Axiom: ${JSON.stringify(payload)}`)
-    const response = await fetch(`${axiomApiUrl}/v2/annotations`, {
+    const response = await fetch(`${axiomUrl}/v2/annotations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${axiomToken}`
       },
       body: JSON.stringify(payload)
     })

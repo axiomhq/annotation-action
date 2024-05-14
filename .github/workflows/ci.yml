@@ -55,23 +55,23 @@ jobs:
         id: test-action-minimal
         uses: ./
         with:
-          token: ${{ secrets.AXIOM_TOKEN }}
-          axiomApiUrl: ${{ secrets.AXIOM_API_URL }}
+          axiomToken: ${{ secrets.AXIOM_TOKEN }}
+          axiomUrl: ${{ secrets.AXIOM_API_URL }}
           datasets: annotations-action-ci
           type: "minimal-example"
       - name: Test Local Action (Complete)
         id: test-action-complete
         uses: ./
         with:
-          token: ${{ secrets.AXIOM_TOKEN }}
-          axiomApiUrl: ${{ secrets.AXIOM_API_URL }}
+          axiomToken: ${{ secrets.AXIOM_TOKEN }}
+          axiomUrl: ${{ secrets.AXIOM_API_URL }}
           datasets: annotations-action-ci
+          type: "complete-example"
           time: "2024-01-01T00:00:00Z"
           endTime: "2024-01-01T01:00:00Z"
           title: "Complete example"
           description: "This annotation has all the fields!"
           url: "https://axiom.co"
-          type: "complete-example"
       - name: "Install Hurl"
         run: |
           VERSION=4.3.0
