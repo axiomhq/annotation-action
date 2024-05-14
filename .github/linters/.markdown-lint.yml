@@ -6,6 +6,5 @@ MD004:
 MD029:
   style: one
 
-
-MD013:
-  stern: true
+# Line length
+MD013: false
