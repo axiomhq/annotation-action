@@ -13,7 +13,7 @@ This action allows you to create an annotation in Axiom.
 
 ```yaml
 - name: Create annotation
-  uses: axiomhq/annotation-action@v1
+  uses: axiomhq/annotation-action@v0.1.0
   with:
     axiomToken: ${{ secrets.AXIOM_TOKEN }}
     datasets: production-logs
