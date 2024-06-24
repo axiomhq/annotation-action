@@ -25,6 +25,7 @@ the
 To create an annotation when a deployment happens in GitHub, follow these steps:
 
 1. Add the following to the end of your GitHub Action file:
+
    ```yml
    - name: Add annotation in Axiom when a deployment happens
      uses: axiomhq/annotation-action@v0.1.0
@@ -38,6 +39,7 @@ To create an annotation when a deployment happens in GitHub, follow these steps:
        description: 'Commit ${{ github.event.head_commit.message }}' # optional
        url: 'https://example.com' # optional, defaults to job url
    ```
+
 2. In the code above, replace the following:
    - Replace `DATASET_NAME` with the Axiom dataset where you want to send data.
      To add the annotation to more than one dataset, enter a string of Axiom
