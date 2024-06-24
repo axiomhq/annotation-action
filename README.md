@@ -40,14 +40,14 @@ To create an annotation when a deployment happens in GitHub, follow these steps:
        url: 'https://example.com' # optional, defaults to job url
    ```
 
-2. In the code above, replace the following:
+1. In the code above, replace the following:
    - Replace `DATASET_NAME` with the Axiom dataset where you want to send data.
      To add the annotation to more than one dataset, enter a string of Axiom
      dataset names separated by commas. For example
      `axiom_datasets: 'DATASET_NAME_1, DATASET_NAME_2, DATASET_NAME_3'`.
    - Replace `API_TOKEN` with your Axiom API token. Add this token to your
      secrets.
-3. Customize the other fields of the code above such as the title, the
+1. Customize the other fields of the code above such as the title, the
    description, and the URL.
 
 This creates an annotation in Axiom each time you deploy in GitHub.
