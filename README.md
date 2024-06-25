@@ -15,8 +15,7 @@ the
 ## Prerequisites
 
 - [Create an Axiom account](https://app.axiom.co/).
-- [Create a dataset](https://axiom.co/docs/reference/datasets) with the name
-  `my-dataset`.
+- [Create a dataset](https://axiom.co/docs/reference/datasets).
 - [Create an advanced API token in Axiom with permissions to update dashboards](https://axiom.co/docs/reference/tokens).
 - [Send data to your Axiom dataset](https://axiom.co/docs/send-data/ingest).
 
@@ -44,9 +43,9 @@ To create an annotation when a deployment happens in GitHub, follow these steps:
    - Replace `DATASET_NAME` with the Axiom dataset where you want to send data.
      To add the annotation to more than one dataset, enter a string of Axiom
      dataset names separated by commas. For example
-     `axiom_datasets: 'DATASET_NAME_1, DATASET_NAME_2, DATASET_NAME_3'`.
-   - Replace `API_TOKEN` with your Axiom API token. Add this token to your
-     secrets.
+     `datasets: 'DATASET_NAME_1, DATASET_NAME_2, DATASET_NAME_3'`.
+   - Add the Axiom API token to your GitHub secrets, and replace `API_TOKEN`
+     with the name of this secret.
 1. Customize the other fields of the code above such as the title, the
    description, and the URL.
 
