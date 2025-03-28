@@ -24746,7 +24746,10 @@ async function run() {
         const axiomToken = core.getInput('axiomToken', { required: true });
         core.setSecret(axiomToken); // Mask token in output
         const payload = {
-            datasets: core.getInput('datasets', { required: true }).split(','),
+            datasets: core
+                .getInput('datasets', { required: true })
+                .split(',')
+                .map(d => d.trim()),
             time: core.getInput('time') || new Date().toISOString(),
             endTime: core.getInput('endTime') || undefined,
             title: core.getInput('title') || undefined,
