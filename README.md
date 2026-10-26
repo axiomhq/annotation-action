@@ -27,7 +27,7 @@ To create an annotation when a deployment happens in GitHub, follow these steps:
 
    ```yml
    - name: Add annotation in Axiom when a deployment happens
-     uses: axiomhq/annotation-action@v0.1.0
+     uses: axiomhq/annotation-action@v0.2.0
      with:
        axiomToken: ${{ secrets.API_TOKEN }}
        datasets: DATASET_NAME
